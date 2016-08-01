@@ -3,209 +3,253 @@ using System.Runtime.InteropServices;
 
 namespace BinarySearchTree
 {
-	public class BinaryNodeTree<T> where T : IComparable
-	{
-		BinaryNode<T> root;
+    public class BinaryNodeTree<T> where T : IComparable
+    {
+        BinaryNode<T> root;
 
-		public BinaryNodeTree()
-		{
-			root = null;
-		}
+        public BinaryNodeTree()
+        {
+            root = null;
+        }
 
-		public BinaryNode<T> Root
-		{
-			get
-			{
-				return root;
-			}
-			set
-			{
-				root = value;
-			}
-		}
+        public BinaryNode<T> Root
+        {
+            get
+            {
+                return root;
+            }
+            set
+            {
+                root = value;
+            }
+        }
 
-		public virtual void Clear()
-		{
-			root = null;
-		}
+        public virtual void Clear()
+        {
+            root = null;
+        }
 
-		public void Insert(T value)
-		{
-			var binaryNode = new BinaryNode<T>(value);
-			Insert(binaryNode);
-		}
+        public void Insert(T value)
+        {
+            var binaryNode = new BinaryNode<T>(value);
+            Insert(binaryNode);
+        }
 
-		public void Insert(BinaryNode<T> node)
-		{
-			if (Root == null)
-			{
-				Root = node;
-				return;
-			}
+        public void Insert(BinaryNode<T> node)
+        {
+            if (Root == null)
+            {
+                Root = node;
+                return;
+            }
 
-			Insert(node, Root);
-		}
+            Insert(node, Root);
+        }
 
-		void Insert(BinaryNode<T> nodeToInsert, BinaryNode<T> currentNode)
-		{
-			var compareToInt = nodeToInsert.Value.CompareTo(currentNode.Value);
+        void Insert(BinaryNode<T> nodeToInsert, BinaryNode<T> currentNode)
+        {
+            var compareToInt = nodeToInsert.Value.CompareTo(currentNode.Value);
 
-			switch (compareToInt)
-			{
-				case (0):
-				case (-1):
-					if (currentNode.Left == null)
-					{
-						currentNode.Left = nodeToInsert;
-						return;
-					}
+            switch (compareToInt)
+            {
+                case (0):
+                case (-1):
+                    if (currentNode.Left == null)
+                    {
+                        currentNode.Left = nodeToInsert;
+                        return;
+                    }
 
-					Insert(nodeToInsert, currentNode.Left);
-					return;
+                    Insert(nodeToInsert, currentNode.Left);
+                    return;
 
-				case (1):
-					if (currentNode.Right == null)
-					{
-						currentNode.Right = nodeToInsert;
-						return;
-					}
+                case (1):
+                    if (currentNode.Right == null)
+                    {
+                        currentNode.Right = nodeToInsert;
+                        return;
+                    }
 
-					Insert(nodeToInsert, currentNode.Right);
-					return;
+                    Insert(nodeToInsert, currentNode.Right);
+                    return;
 
-				default:
-					return;
-			}
-		}
+                default:
+                    return;
+            }
+        }
 
-		public BinaryNode<T> GetNode(T value)
-		{
-			return GetNode(value, Root);
-		}
+        public BinaryNode<T> GetNode(T value)
+        {
+            return GetNode(value, Root);
+        }
 
-		BinaryNode<T> GetNode(T value, BinaryNode<T> node)
-		{
-			if (node == null)
-				return null;
+        BinaryNode<T> GetNode(T value, BinaryNode<T> node)
+        {
+            if (node == null)
+                return null;
 
-			var compareToInt = value.CompareTo(node.Value);
+            var compareToInt = value.CompareTo(node.Value);
 
-			switch (compareToInt)
-			{
-				case (0):
-					return node;
-				case (1):
-					return GetNode(value, node.Right);
-				case (-1):
-					return GetNode(value, node.Left);
-				default:
-					return null;
-			}
-		}
+            switch (compareToInt)
+            {
+                case (0):
+                    return node;
+                case (1):
+                    return GetNode(value, node.Right);
+                case (-1):
+                    return GetNode(value, node.Left);
+                default:
+                    return null;
+            }
+        }
 
-		public BinaryNode<T> GetParentNode(BinaryNode<T> node)
-		{
-			var parentNode = Root;
-			if (Root == null || node == null)
-				return null;
+        public BinaryNode<T> GetParentNode(BinaryNode<T> node)
+        {
+            var parentNode = Root;
+            if (Root == null || node == null)
+                return null;
 
-			var intComparison = node.Value.CompareTo(Root.Value);
+            var intComparison = node.Value.CompareTo(Root.Value);
 
 
-			switch (intComparison)
-			{
-				case (0):
-				case (-1):
-					return GetParentNode(node, Root.Left, Root);
-				case (1):
-					return GetParentNode(node, Root.Right, Root);
-				default:
-					return null;
-			}
-		}
+            switch (intComparison)
+            {
+                case (0):
+                case (-1):
+                    return GetParentNode(node, Root.Left, Root);
+                case (1):
+                    return GetParentNode(node, Root.Right, Root);
+                default:
+                    return null;
+            }
+        }
 
-		BinaryNode<T> GetParentNode(BinaryNode<T> nodeToFind, BinaryNode<T> currentNode, BinaryNode<T> parentNode)
-		{
-			if (currentNode == null)
-				return null;
-			else if (currentNode.Equals(nodeToFind))
-				return parentNode;
+        BinaryNode<T> GetParentNode(BinaryNode<T> nodeToFind, BinaryNode<T> currentNode, BinaryNode<T> parentNode)
+        {
+            if (currentNode == null)
+                return null;
+            else if (currentNode.Equals(nodeToFind))
+                return parentNode;
 
-			var intComparison = nodeToFind.Value.CompareTo(currentNode.Value);
-			switch (intComparison)
-			{
-				case (0):
-				case (-1):
-					return GetParentNode(nodeToFind, currentNode.Left, currentNode);
-				case (1):
-					return GetParentNode(nodeToFind, currentNode.Right, currentNode);
-				default:
-					return null;
-			}
-		}
+            var intComparison = nodeToFind.Value.CompareTo(currentNode.Value);
+            switch (intComparison)
+            {
+                case (0):
+                case (-1):
+                    return GetParentNode(nodeToFind, currentNode.Left, currentNode);
+                case (1):
+                    return GetParentNode(nodeToFind, currentNode.Right, currentNode);
+                default:
+                    return null;
+            }
+        }
 
-		public BinaryNode<T> Remove(T value)
-		{
-			var nodeToRemove = GetNode(value);
-			var parentNode = GetParentNode(nodeToRemove);
+        public BinaryNode<T> Remove(T value)
+        {
+            var nodeToRemove = GetNode(value);
+            var parentNode = GetParentNode(nodeToRemove);
 
-			Remove(nodeToRemove, parentNode);
+            Remove(nodeToRemove, parentNode);
 
-			return nodeToRemove;
-		}
+            return nodeToRemove;
+        }
 
-		void Remove(BinaryNode<T> currentNode, BinaryNode<T> parentNode)
-		{
-			if (currentNode == null)
-				return;
+        void Remove(BinaryNode<T> currentNode, BinaryNode<T> parentNode)
+        {
+            if (currentNode == null)
+                return;
 
-			if (currentNode.Right != null)
-			{
-				var rightChildValue = currentNode.Right.Value;
-				Remove(currentNode.Right, currentNode);
-				currentNode.Value = rightChildValue;
-			}
+            if (currentNode.Right != null)
+            {
+                var leftMostNode = FindLeftMostNode(currentNode.Right);
+                var leftMostNodeParent = GetParentNode(leftMostNode);
 
-			else if (currentNode.Left != null)
-			{
-				var leftChildValue = currentNode.Left.Value;
-				Remove(currentNode.Left, currentNode);
-				currentNode.Value = leftChildValue;
-			}
-			else
-			{
-				if (currentNode.Equals(Root))
-				{
-					Root = null;
-					return;
-				}
-				var compareInt = currentNode.Value.CompareTo(parentNode.Value);
-				switch (compareInt)
-				{
-					case (0):
-					case (-1):
-						parentNode.Left = null;
-						return;
-					case (1):
-						parentNode.Right = null;
-						return;
-					default:
-						return;
-				}
-			}
-		}
+                currentNode.Value = leftMostNode.Value;
 
-		public override string ToString()
-		{
-			return ToString(Root);
-		}
+                if (leftMostNodeParent != null && leftMostNode.Right == null)
+                {
+                    if (leftMostNodeParent.Equals(currentNode))
+                        leftMostNodeParent.Right = null;
+                    else
+                        leftMostNodeParent.Left = null;
+                }
+                else
+                    Remove(leftMostNode, leftMostNodeParent);                
+            }
 
-		string ToString(BinaryNode<T> node)
-		{
-			if (node == null)
-				return " ";
+            else if (currentNode.Left != null)
+            {
+                var leftChildValue = currentNode.Left.Value;
+                Remove(currentNode.Left, currentNode);
+                currentNode.Value = leftChildValue;
+            }
+            else
+            {
+                if (currentNode.Equals(Root))
+                {
+                    Root = null;
+                    return;
+                }
+                var compareInt = currentNode.Value.CompareTo(parentNode.Value);
+                switch (compareInt)
+                {
+                    case (0):
+                    case (-1):
+                        parentNode.Left = null;
+                        return;
+                    case (1):
+                        parentNode.Right = null;
+                        return;
+                    default:
+                        return;
+                }
+            }
+        }
 
-			return $"{ToString(node.Left)}{node.Value.ToString()}{ToString(node.Right)}";
-		}
-	}
+        BinaryNode<T> FindRightMostNode()
+        {
+            if (Root == null)
+                return null;
+
+            return FindRightMostNode(Root);
+        }
+
+        BinaryNode<T> FindRightMostNode(BinaryNode<T> currentNode)
+        {
+            if (currentNode.Right != null)
+                return FindRightMostNode(currentNode.Right);
+
+            return currentNode;
+        }
+
+        BinaryNode<T> FindLeftMostNode()
+        {
+            if (Root == null)
+                return null;
+
+            return FindLeftMostNode(Root);
+        }
+
+        BinaryNode<T> FindLeftMostNode(BinaryNode<T> currentNode)
+        {
+            if (currentNode.Left != null)
+                return FindLeftMostNode(currentNode.Left);
+
+            return currentNode;
+        }
+
+
+        public override string ToString()
+        {
+            return ToString(Root);
+        }
+
+        string ToString(BinaryNode<T> node)
+        {
+            if (node == null)
+                return " ";
+
+            return $"{ToString(node.Left)}{node.Value.ToString()}{ToString(node.Right)}";
+        }
+    }
 }
