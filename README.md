@@ -5,10 +5,10 @@
 
 || Average | Worst Case|
 |-----|---------|-----------|
-|Space|	?(n)|O(n)|
-|Search|?(log n)|O(n)|
-|Insert|?(log n)|O(n)|
-|Delete|?(log n)|O(n^2)|
+|Space|	Θ(n)|O(n)|
+|Search|Θ(log n)|O(n)|
+|Insert|Θ(log n)|O(n)|
+|Delete|Θ(log n)|O(n^2)|
 
 ### Example
 
