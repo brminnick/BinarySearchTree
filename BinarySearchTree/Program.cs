@@ -7,7 +7,7 @@ namespace BinarySearchTree
     class MainClass
     {
 
-        static Random random = new Random((int)DateTime.Now.Ticks);//thanks to McAden
+        static Random random = new Random((int)DateTime.Now.Ticks);
 
         public static void Main(string[] args)
         {
